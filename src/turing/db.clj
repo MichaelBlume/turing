@@ -42,7 +42,7 @@
   (map :id (query db "select id from entry")))
 
 (defn get-essay [id]
-  (first (query db ["select essay, sincere from entry where id = ?" id])))
+  (first (query db ["select essay, sincere, sincere_votes, insincere_votes from entry where id = ?" id])))
 
 (defn vote-sincere [id]
   (db-do-commands

@@ -57,13 +57,16 @@
        [:div {:class "button"}
         [:button {:type "submit"} "Continue"]]]]]))
 
-(defn review-vote-page [essay remaining vote actual]
+(defn review-vote-page [essay remaining vote actual sincere-votes insincere-votes]
   (html
     [:html
      [:body
       [:p
        "you chose " vote " for this essay, when "
-       "actually this essay was " actual]
+       "actually this essay was " actual ". "
+       sincere-votes " people guessed that this "
+       "essay was sincere. " insincere-votes
+       " people guessed that it was devil's advocacy."]
       [:p
        [:a {:href (str
                     "/read-essays?"

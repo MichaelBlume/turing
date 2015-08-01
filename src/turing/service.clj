@@ -62,8 +62,7 @@
 
 (defn vote-controller [{:keys [body]}]
   (let [remaining (get-remaining body)
-        sincere (get (form-decode body) "sincere")
-        essay (get-essay (first remaining))]
+        sincere (get (form-decode body) "sincere")]
     (if (= sincere "mu")
       "please go back and make a choice"
       (do
@@ -71,14 +70,17 @@
           "sincere" (vote-sincere (first remaining))
           "insincere" (vote-insincere (first remaining))
           nil)
-        (review-vote-page
-          (:essay essay)
-          remaining
-          sincere
-          (case (:sincere essay)
-            "true" "sincere"
-            "false" "insincere"
-            "db read error"))))
+        (let [essay (get-essay (first remaining))]
+          (review-vote-page
+            (:essay essay)
+            remaining
+            sincere
+            (case (:sincere essay)
+              "true" "sincere"
+              "false" "insincere"
+              "db read error")
+            (:sincere_votes essay)
+            (:insincere_votes essay)))))
 
 
     
